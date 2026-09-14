@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070910"><title>XAUUSD Ultimate AI</title>
+<style>
+:root{--bg:#070910;--p:#0d121c;--p2:#111827;--line:#263143;--text:#f7f8fb;--muted:#8e99aa;--gold:#f4c44e;--green:#22c55e;--red:#ef4444;--blue:#60a5fa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#1a2233,#070910 45%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:760px;margin:auto;padding:18px 14px 42px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.brand{font-weight:950}.brand span{color:var(--gold)}.status{font-size:11px;border:1px solid #334055;border-radius:999px;padding:7px 10px;color:#aeb8c8}
+.card{background:linear-gradient(145deg,#101722,#0b1018);border:1px solid #252f40;border-radius:24px;padding:20px;box-shadow:0 18px 60px #0008}.hero h1{font-size:30px;margin:0 0 8px}.hero p{color:var(--muted);line-height:1.5;margin:0}
+.drop{margin-top:18px;border:1.5px dashed #3b475a;border-radius:19px;padding:22px;text-align:center;background:#0a0f17}.drop b{font-size:17px}.drop small{display:block;color:var(--muted);margin:6px 0 15px}.btn{width:100%;border:0;border-radius:15px;padding:15px;font-weight:850;font-size:16px;cursor:pointer}.secondary{background:#151c28;color:#fff;border:1px solid #2b374a}.primary{margin-top:12px;background:linear-gradient(135deg,#f8d66b,#dc9e20);color:#171208}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.select{width:100%;background:#0c121c;color:#fff;border:1px solid #2a3547;border-radius:13px;padding:12px}.thumbs{display:flex;gap:9px;justify-content:center;margin-top:12px}.thumb{width:86px;height:65px;object-fit:cover;border-radius:9px;border:1px solid #334055}.loading,.error{display:none;margin-top:14px;padding:14px;border-radius:13px}.loading{background:#0e1723;color:#dbe3ef}.loading.on{display:block}.error{background:#2b1116;border:1px solid #6b2630;color:#fecaca}.error.on{display:block}.spin{display:inline-block;width:13px;height:13px;border:2px solid #536176;border-top-color:var(--gold);border-radius:50%;animation:r .8s linear infinite;margin-right:7px}@keyframes r{to{transform:rotate(360deg)}}
+.result{display:none;margin-top:16px}.result.on{display:block}.signal{padding:19px;border:1px solid #2b3547;border-radius:22px;background:#0c111a}.signal.buy{box-shadow:0 0 40px #22c55e1c}.signal.sell{box-shadow:0 0 40px #ef44441c}.signal.wait{box-shadow:0 0 40px #60a5fa1c}.head{display:flex;align-items:center;justify-content:space-between}.sig{font-size:42px;font-weight:950}.buy .sig{color:var(--green)}.sell .sig{color:var(--red)}.wait .sig{color:var(--blue)}.conf{color:var(--muted);font-size:13px}.meter{height:8px;background:#202a39;border-radius:99px;overflow:hidden;margin:11px 0 16px}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#f4c44e,#22c55e)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.box{background:#0a0f17;border:1px solid #202b3a;border-radius:13px;padding:12px}.box label{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.box strong{font-size:14px}.section{margin-top:12px}.section h3{font-size:12px;color:#cdd5e2;margin:0 0 7px}.text{background:#0a0f17;border:1px solid #202b3a;border-radius:13px;padding:12px;line-height:1.5;font-size:14px;color:#d9e0ea}.history{margin-top:18px}.history h2{font-size:15px}.hist{display:flex;justify-content:space-between;padding:11px 3px;border-bottom:1px solid #1c2634;color:#b8c2d1;font-size:13px}.foot{text-align:center;color:#657185;font-size:11px;line-height:1.5;margin-top:18px}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><div class="brand">XAUUSD <span>ULTIMATE AI</span></div><div class="status" id="status">● ONLINE</div></div>
+<div class="card hero">
+<h1>Scan your MT5 chart.</h1><p>Upload up to 3 screenshots. The online AI reads the visible structure and gives one clear decision: BUY, SELL, or WAIT.</p>
+<div class="drop" id="drop"><b>📸 Add chart screenshots</b><small>PNG / JPG / WEBP · maximum 3</small><button class="btn secondary" id="pick">Choose screenshots</button><input id="files" type="file" accept="image/png,image/jpeg,image/webp" multiple><div class="thumbs" id="thumbs"></div></div>
+<div class="controls"><select class="select" id="tf"><option>M1</option><option selected>M5</option><option>M15</option><option>H1</option></select><select class="select" id="style"><option selected>Scalp</option><option>Intraday</option><option>Conservative</option></select></div>
+<button class="btn primary" id="scan">⚡ ANALYZE XAUUSD</button><button class="btn secondary" id="clear" style="margin-top:10px">Clear</button>
+<div class="loading" id="loading"><span class="spin"></span><span id="loadText">AI is reading the chart…</span></div><div class="error" id="error"></div>
+</div>
+<div class="result" id="result"><div class="signal wait" id="signal">
+<div class="head"><div class="sig" id="decision">WAIT</div><div class="conf" id="confidence">0% evidence</div></div><div class="meter"><i id="meter"></i></div>
+<div class="grid">
+<div class="box"><label>TIMEFRAME</label><strong id="r_tf">—</strong></div><div class="box"><label>SETUP</label><strong id="r_setup">—</strong></div>
+<div class="box"><label>BIAS</label><strong id="r_bias">—</strong></div><div class="box"><label>ENTRY ZONE</label><strong id="r_entry">—</strong></div>
+<div class="box"><label>STOP LOSS</label><strong id="r_sl">—</strong></div><div class="box"><label>RISK / REWARD</label><strong id="r_rr">—</strong></div>
+</div>
+<div class="section"><h3>TAKE PROFITS</h3><div class="text" id="r_tp">—</div></div>
+<div class="section"><h3>SUPPORT / RESISTANCE</h3><div class="text" id="r_levels">—</div></div>
+<div class="section"><h3>AI READ</h3><div class="text" id="r_reason">—</div></div>
+<div class="section"><h3>CONFIRMATION</h3><div class="text" id="r_confirm">—</div></div>
+<div class="section"><h3>INVALIDATION / NO-TRADE</h3><div class="text" id="r_invalid">—</div></div>
+</div></div>
+<div class="history"><h2>Recent scans</h2><div id="history"></div></div>
+<div class="foot">Educational chart analysis only. No orders are placed automatically. AI confidence measures visible evidence, not guaranteed profit.</div>
+</div>
+<script>
+const filesEl=document.getElementById('files'),pick=document.getElementById('pick'),drop=document.getElementById('drop'),thumbs=document.getElementById('thumbs');let files=[];
+pick.onclick=()=>filesEl.click();filesEl.onchange=()=>{files=[...filesEl.files].slice(0,3);render()};
+drop.ondragover=e=>{e.preventDefault();drop.style.borderColor='#f4c44e'};drop.ondragleave=()=>drop.style.borderColor='';
+drop.ondrop=e=>{e.preventDefault();drop.style.borderColor='';files=[...e.dataTransfer.files].filter(x=>x.type.startsWith('image/')).slice(0,3);render()};
+function render(){thumbs.innerHTML='';files.forEach(f=>{let i=document.createElement('img');i.className='thumb';i.src=URL.createObjectURL(f);thumbs.appendChild(i)})}
+function set(id,x){document.getElementById(id).textContent=(x===undefined||x===null||x==='')?'—':x}
+function hist(){let h=JSON.parse(localStorage.getItem('xau_hist')||'[]');document.getElementById('history').innerHTML=h.length?h.map(x=>`<div class="hist"><span>${x.time} · ${x.tf}</span><b>${x.decision}</b></div>`).join(''):'<div class="text">No scans yet.</div>'}
+async function scan(){
+ let er=document.getElementById('error');er.classList.remove('on');er.textContent='';
+ if(!files.length){er.textContent='Add a chart screenshot first.';er.classList.add('on');return}
+ let fd=new FormData();files.forEach(f=>fd.append('charts',f));fd.append('timeframe',document.getElementById('tf').value);fd.append('style',document.getElementById('style').value);
+ document.getElementById('loading').classList.add('on');document.getElementById('loadText').textContent='AI is reading the chart…';
+ try{let r=await fetch('/api/analyze',{method:'POST',body:fd});let d=await r.json();if(!r.ok)throw Error(d.error||'Server error');show(d)}
+ catch(e){er.textContent=e.message==='Failed to fetch'?'The online server is not reachable. Open the deployed HTTPS app address, not the HTML file.':e.message;er.classList.add('on')}
+ finally{document.getElementById('loading').classList.remove('on')}
+}
+function show(d){document.getElementById('result').classList.add('on');let s=(d.decision||'WAIT').toUpperCase(),c=document.getElementById('signal');c.className='signal '+(s==='BUY'?'buy':s==='SELL'?'sell':'wait');set('decision',s);let n=Math.max(0,Math.min(100,Number(d.confidence)||0));set('confidence',n+'% evidence');document.getElementById('meter').style.width=n+'%';set('r_tf',d.timeframe);set('r_setup',d.setup);set('r_bias',d.bias);set('r_entry',d.entry_zone);set('r_sl',d.stop_loss);set('r_rr',d.risk_reward);set('r_tp',[d.tp1,d.tp2,d.tp3].filter(Boolean).join(' · '));set('r_levels',d.support_resistance);set('r_reason',d.reason);set('r_confirm',d.confirmation);set('r_invalid',d.invalidation);let h=JSON.parse(localStorage.getItem('xau_hist')||'[]');h.unshift({time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),tf:d.timeframe||'M5',decision:s});localStorage.setItem('xau_hist',JSON.stringify(h.slice(0,10)));hist()}
+document.getElementById('scan').onclick=scan;document.getElementById('clear').onclick=()=>{files=[];filesEl.value='';thumbs.innerHTML='';document.getElementById('result').classList.remove('on');document.getElementById('error').classList.remove('on')};hist();
+</script></body></html>
